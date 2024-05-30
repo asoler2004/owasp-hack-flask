@@ -37,7 +37,7 @@ def list():
     username = request.cookies['user']
     search_by = request.args.get('query', "")
     filter = ""
-    if search_by is not "":
+    if search_by != "":
         filter = "WHERE PRODUCT like '" + search_by + "%'"
     query_results = run_query('SELECT * FROM STUFF %s' % (filter))
     data = [dict(id=row[0], product=row[1], description=row[2], price=row[3]) for row in query_results.fetchall()]
