@@ -58,7 +58,7 @@ def check_login():
     query_results = run_query('SELECT * FROM USERS WHERE password="%s" AND name="%s";' % (password, username))
     if query_results.fetchone():
         response = make_response(redirect('/list'))
-        response.set_cookie('user', username)
+        response.set_cookie('user', username, secure=True, httponly=True, samesite='Lax')
         return response
     else:
         return render_template('login.html')
