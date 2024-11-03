@@ -1,10 +1,10 @@
 import sys
 import socket
-import random
 import string
 import sqlite3
 from flask import Flask, render_template, Response, request, g, redirect
 from flask import url_for, make_response
+import secrets
 
 app = Flask(__name__)
 
@@ -110,7 +110,7 @@ def seed_db():
         product_no = index
         product = random_word(count=1)
         product_description = random_word(count=8)
-        price = random.randrange(10, 100)
+        price = secrets.SystemRandom().randrange(10, 100)
         c.execute('INSERT INTO STUFF VALUES (%i, "%s", "%s", %i)' % (product_no, product, product_description, price))
     conn.commit()
     conn.close()
@@ -118,8 +118,8 @@ def seed_db():
 
 
 def random_word(count=1):
-    return ' '.join(random.choice(WORDS) for _ in range(count))
+    return ' '.join(secrets.choice(WORDS) for _ in range(count))
 
 
 def random_string(length=12):
-    return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
+    return ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(length))
